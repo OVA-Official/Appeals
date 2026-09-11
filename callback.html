@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Authorizing OVA Session...</title></head>
+<body style="background:#030508;color:#00f3ff;font-family:monospace;display:flex;align-items:center;justify-content:center;height:100vh;">
+  <div>AUTHENTICATING OVA SESSION // PLEASE WAIT...</div>
+  <script>
+    // Grab the OAuth hash or code from the URL and forward it to the offline wheel
+    if (window.opener) {
+      window.opener.postMessage({ type: 'OVA_AUTH_CALLBACK', url: window.location.href }, '*');
+      window.close();
+    }
+  </script>
+</body>
+</html>
