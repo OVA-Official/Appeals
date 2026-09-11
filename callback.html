@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head><title>Authorizing OVA Session...</title></head>
-<body style="background:#030508;color:#00f3ff;font-family:monospace;display:flex;align-items:center;justify-content:center;height:100vh;">
-  <div>AUTHENTICATING OVA SESSION // PLEASE WAIT...</div>
+<body style="background:#030508;color:#00f3ff;font-family:monospace;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;">
+  <div style="font-weight:bold;letter-spacing:1px;">AUTHENTICATING OVA SESSION...</div>
+  <div id="status" style="color:#888;font-size:12px;margin-top:8px;">Transmitting token to wheel...</div>
   <script>
-    // Grab the OAuth hash or code from the URL and forward it to the offline wheel
-    if (window.opener) {
-      window.opener.postMessage({ type: 'OVA_AUTH_CALLBACK', url: window.location.href }, '*');
-      window.close();
+    try {
+      if (window.opener) {
+        window.opener.postMessage({ 
+          type: 'OVA_AUTH_CALLBACK', 
+          url: window.location.href 
+        }, '*');
+        document.getElementById('status').innerText = 'Handshake complete! Closing window...';
+        setTimeout(() => window.close(), 600);
+      } else {
+        document.getElementById('status').innerText = 'Error: Parent window not detected.';
+      }
+    } catch (err) {
+      document.getElementById('status').innerText = 'Transmission error: ' + err.message;
     }
   </script>
 </body>
